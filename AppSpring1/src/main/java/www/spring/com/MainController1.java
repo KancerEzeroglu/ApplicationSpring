@@ -9,9 +9,14 @@ import model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,5 +95,43 @@ public class MainController1 {
 		
 		model4.addAttribute("student_features", s);
 		return "yeniSayfa3";
+	}
+	
+	// POST ORNEGI xml ile
+	
+	
+	@RequestMapping(value = "/student", method = RequestMethod.GET)  // value degeri degisse asagiyi degistirmek gerekir mi?
+	public ModelAndView student(){
+		return new ModelAndView("student", "command", new Student());
+	}
+	@RequestMapping(value = "/addStudent", method = RequestMethod.POST)
+	public String addStudent(@ModelAttribute Student student, ModelMap model){
+		
+		model.addAttribute("name", student.getName());
+		model.addAttribute("surname", student.getSurname());
+		model.addAttribute("age", student.getAge());
+	      
+	      return "result";
+	}
+	
+	//POST Ornegi json ile
+	
+	@RequestMapping(value="/studentJson")
+	public ResponseEntity<Student> get(){
+		Student st =new Student();
+		
+		st.setName("kancer2");
+		st.setSurname("gokirmak2");
+		st.setAge(77);
+		
+		return new ResponseEntity<Student>(st, HttpStatus.OK);
+	}
+	@RequestMapping(value="/studentJson2", method = RequestMethod.POST)
+	public ResponseEntity<Student> update(@RequestBody Student stu){
+		
+		if(stu != null){
+			stu.setAge(stu.getAge()+34);
+		}
+		return new ResponseEntity<Student>(stu, HttpStatus.OK);
 	}
 }
