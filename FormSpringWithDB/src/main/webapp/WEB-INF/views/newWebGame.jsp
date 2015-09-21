@@ -81,14 +81,3 @@
 		</div>
 	</div>
 </div>
-
-
-
-
-
-<%-- <li><i class="fa fa-search-plus"></i> <a
-					href="<c:url value="/" />"> List Games</a> <i
-					class="fa fa-angle-right"></i></li>
-
-<li><i class="fa fa-bar-chart"></i> New Web Game</li> --%>
-
