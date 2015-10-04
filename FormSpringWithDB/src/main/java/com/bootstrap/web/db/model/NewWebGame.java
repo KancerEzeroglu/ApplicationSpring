@@ -18,7 +18,7 @@ public class NewWebGame implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	private long id;
+	private int id;
 
 	@Column(name = "NAME")
 	private String name;
@@ -39,7 +39,7 @@ public class NewWebGame implements Serializable {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -10,7 +10,8 @@
 				<div class="col-lg-12">
 					<div id="content-header" class="clearfix">
 						<ul class="breadcrumb">
-							<li><i class="fa fa-home"></i><a href="<c:url value="/welcome" />">Home<i
+							<li><i class="fa fa-home"></i><a
+								href="<c:url value="/welcome" />">Home</a><i
 								class="fa fa-angle-right"></i></li>
 							<li><i class="fa fa-gamepad"></i> <a
 								href="<c:url value="/" />">Games</a> <i
@@ -69,7 +70,24 @@
 
 											</thead>
 											<tbody>
-												<!-- wanted data will be listed-->
+
+												<c:forEach items="${newWebGame_o}" var="gamesName">
+													<tr>
+														<td>${gamesName.name}</td>
+														<td>${gamesName.game}</td>
+														<td class="text-center">
+														<a class="btn btn-primary"
+															title="Edit"
+															href="<c:url value="/listGames/edit/${gamesName.id}"/>">
+																<i class="fa fa-pencil"></i> Edit
+														</a> 
+														<a class="btn btn-danger" title="Delete" id="delete"
+															href="listGames/delete/${gamesName.id}">
+																<i class="fa fa-trash-o"></i> Delete
+														</a></td>
+													</tr>
+												</c:forEach>
+
 											</tbody>
 										</table>
 									</div>

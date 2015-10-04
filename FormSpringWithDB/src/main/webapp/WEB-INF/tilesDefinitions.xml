@@ -29,4 +29,10 @@
 	<definition name="newBanner" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/newBanner.jsp" />
 	</definition>
+	<definition name="editGame" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/editGame.jsp" />
+	</definition>
+	<definition name="deleteGame" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/deleteGame.jsp" />
+	</definition>
 </tiles-definitions>
