@@ -82,7 +82,8 @@
 																<i class="fa fa-pencil"></i> Edit
 														</a> 
 														<a class="btn btn-danger" title="Delete" id="delete"
-															href="listGames/delete/${gamesName.id}">
+															href="listGames/delete/${gamesName.id}"> <!-- c:url kullaninca gidilen url'de hata oldu. Bu hata belki tekrar 
+															gorulmek istenebilir -->
 																<i class="fa fa-trash-o"></i> Delete
 														</a></td>
 													</tr>
