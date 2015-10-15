@@ -34,6 +34,7 @@ public boolean isTest() {
 public void setTest(boolean test) {
 	this.test = test;
 }
+
 String thumIm;
 String view;
 String game;

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE div PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div class="row">
@@ -30,22 +31,24 @@
 						<h2>List PC Games</h2>
 						</header>
 						<div class="main-box-body clearfix">
-							<form class="form-horizontal" role="form">
+							<form class="form-horizontal" role="form" id="listGameForm"
+								modelAttribute="listGames">
 
 								<div class="form-group">
 									<label class="col-md-2 control-label" for="name">Name</label>
-									<div class="col-md-6">
-										<input class="form-control" id="name"
+									<div class="col-md-6 input-group">
+										<input class="form-control" id="name" name="name" path="name"
 											placeholder="Please enter your name"></input>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-2 control-label" for="datepickerDate">Created
+								 <div class="form-group">
+									<label class="col-md-2 control-label" for="date">Created
 										Date</label>
 									<div class="input-group col-md-6">
 										<span class="input-group-addon"> <i
 											class="fa fa-calendar"></i>
-										</span> <input type="text" class="form-control" id="datepickerDate">
+										</span> <input type="text" class="form-control" id="date"
+											name="date" path= "date">
 									</div>
 									<div class="col-md-10 pull-right">
 										<span class="help-block">format: mm-dd-yyyy</span>
@@ -65,31 +68,11 @@
 												<tr>
 													<th class="text-center"><span>Name</span></th>
 													<th class="text-center"><span>Created Date</span></th>
-													<th class="text-center"><span>Operations</span></th>
+												    <th class="text-center"><span>Operations</span></th>
 												</tr>
 
 											</thead>
-											<tbody>
 
-												<c:forEach items="${newWebGame_o}" var="gamesName">
-													<tr>
-														<td>${gamesName.name}</td>
-														<td>${gamesName.game}</td>
-														<td class="text-center">
-														<a class="btn btn-primary"
-															title="Edit"
-															href="<c:url value="/listGames/edit/${gamesName.id}"/>">
-																<i class="fa fa-pencil"></i> Edit
-														</a> 
-														<a class="btn btn-danger" title="Delete" id="delete"
-															href="listGames/delete/${gamesName.id}"> <!-- c:url kullaninca gidilen url'de hata oldu. Bu hata belki tekrar 
-															gorulebilir -->
-																<i class="fa fa-trash-o"></i> Delete
-														</a></td>
-													</tr>
-												</c:forEach>
-
-											</tbody>
 										</table>
 									</div>
 								</div>

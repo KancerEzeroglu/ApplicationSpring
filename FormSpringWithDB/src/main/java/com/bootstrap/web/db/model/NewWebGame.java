@@ -1,6 +1,7 @@
 package com.bootstrap.web.db.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "NEWWEBGAME")
@@ -34,6 +37,18 @@ public class NewWebGame implements Serializable {
 
 	@Column(name = "TEST")
 	private boolean test;
+	
+	@DateTimeFormat(pattern="MM-dd-yyyy")
+	@Column(name = "DATE")
+	private Date date;
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public long getId() {
 		return id;
@@ -84,12 +99,13 @@ public class NewWebGame implements Serializable {
 	}
 
 	public NewWebGame(String name, String thumIm, String view, String game,
-			boolean test) {
+			boolean test, Date date) {
 		this.name = name;
 		this.thumIm = thumIm;
 		this.view = view;
 		this.game = game;
 		this.test = test;
+		this.date = date;
 	}
 
 	public NewWebGame() {

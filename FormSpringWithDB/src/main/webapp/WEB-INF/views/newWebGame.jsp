@@ -35,6 +35,7 @@
 									<div class="col-md-6">
 										<input class="form-control" id="name" path ="name" name="name"
 											placeholder="Please enter game name"></input>
+											<span class="help-block" id="nameErr"></span>
 									</div>
 								</div>
 								<div class="form-group">
@@ -43,6 +44,7 @@
 									<div class="col-md-6">
 										<input class="form-control" id="thumIm" path="thumIm" name="thumIm"
 											placeholder="Please enter url"></input>
+											<span class="help-block" id="thumImErr"></span>
 									</div>
 								</div>
 								<div class="form-group">
@@ -50,6 +52,7 @@
 										Order</label>
 									<div class="col-md-6">
 										<input class="form-control" id="view" path ="view" name="view" placeholder="2"></input>
+										<span class="help-block" id="viewErr"></span>
 									</div>
 								</div>
 								<div class="form-group">
@@ -58,13 +61,15 @@
 									<div class="col-md-6">
 										<input class="form-control" id="game" path ="game" name="game"
 											placeholder="Please enter game url"></input>
+											<span class="help-block" id="gameErr"></span>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">Test Mode</label>
 									<div class="col-md-6 checkbox checkbox-nice">
-										<input type="checkbox" id="test" checked="checked" path ="test" name="test"> <label
-											for="test"></label>
+										<input type="checkbox" id="test" checked="checked" path ="test" name="test">
+										 <label for="test"></label>
+										 <span class="help-block" id="testErr"></span>
 									</div>
 								</div>
 								<div class="col-lg-8">

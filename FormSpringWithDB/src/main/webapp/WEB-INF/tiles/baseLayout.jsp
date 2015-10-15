@@ -64,5 +64,7 @@
 <script src="<c:url value="/static/js/include.js"/>"></script>
 <script src="<c:url value="/static/css/include.css"/>"></script>
 
+<input id="contextPath" type="hidden" value="<c:url value="/"/>"/>
+
 </body>
 </html>

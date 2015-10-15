@@ -15,9 +15,16 @@
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
 		p:definitions="/WEB-INF/tilesDefinitions.xml" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+	</bean>
+		
 	<context:annotation-config />
 
-    <mvc:annotation-driven />
-    <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
+
 </beans>
 	

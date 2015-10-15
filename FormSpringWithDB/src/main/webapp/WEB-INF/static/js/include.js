@@ -1,12 +1,7 @@
 $(function() {
-	$("#datepickerDate").datepicker({
+	$("#date").datepicker({
 		format : 'mm-dd-yyyy'
 	});
-});
-$("#gameList").hide();
-$("#search").click(function() {
-	$("#gameList").show();
-	return false;
 });
 
 $(function() {
@@ -49,12 +44,16 @@ $('#create').click(function(e) {
 		data : $('#newWebGameFo').serialize(),
 		success : function(data) {
 			alert('Well Done!!!!'); // ilerleyen dönemlerde bunu kaldirmamiz
-									// gerekiyor
+			// gerekiyor
 			window.location.href = "listGames"; // create butonuna bastiktan
-												// sonra listGames sayfasına
-												// yönlendirme yapar
+			// sonra listGames sayfasına
+			// yönlendirme yapar
 		},
 		error : function(request, status, error) {
+			debugger;
+			$.each(request.responseJSON, function(key, value) {
+				$('#' + value.field + 'Err').text(value.defaultMessage);
+			});
 			alert(request.responseText);
 			console.log(status, error);
 		},
@@ -67,7 +66,6 @@ $('#createPCGame').click(function(e) {
 	$.ajax({
 		type : "POST",
 		url : "savePCGame",
-		/* contentType : "application/json; charset=utf-8", */
 		data : $('#newPCGameForm').serialize(),
 		success : function(data) {
 			alert('Well Done!!!!');
@@ -91,7 +89,7 @@ $('#update').click(function(e) {
 			// window.location.href = "/listGames"; //update butonuna bastiktan
 			// sonra listGames sayfasına yönlendirme yapar
 
-			document.location.href = "../../listGames";
+			document.location.href = $('#contextPath').val()+"listGames";
 		},
 		error : function(request, status, error) {
 			alert(request.responseText);
@@ -101,22 +99,69 @@ $('#update').click(function(e) {
 	});
 });
 
-$('#delete').click(function(e) {
+$(document).on('click','.deleteGame',function(e) {
 	e.preventDefault();
 	$.ajax({
 		type : "GET",
-		url : $(this).attr("href"),
-//		contentType: 'application/json; charset=utf-8',
+		url : $(this).attr('href'),
 		success : function(data) {
 			alert("Delete isleminiz basariyla tamamlanmistir.");
-			// window.location.href = "/listGames"; //update butonuna bastiktan
-			// sonra listGames sayfasına yönlendirme yapar
-
-			document.location.href = "/web/listGames";
+			document.location.href = "listGames";
 		},
 		error : function(request, status, error) {
 			alert(request.responseText);
 			console.log(status, error);
 		}
 	});
+});
+
+$("#gameList").hide();
+
+$('#search').click(function(e) {
+	e.preventDefault();
+	$.ajax({
+		type : "POST",
+		url : "searchGames",
+		data : $('#listGameForm').serialize(),
+		dataType : "json",
+		success : function(data) {
+			//tabloyu silme islemini basa ekle
+			$('#gameList').find('tbody').remove();
+			
+			var mainTable = $('#gameList');
+			var body = $('<tbody></tbody>');
+			
+			data.forEach(function(e , i){
+				
+				var d = new Date(e.date);
+
+				var curr_day = d.getDate();
+				var curr_month = d.getMonth();
+				var curr_year = d.getFullYear();
+
+				curr_month++ ; // In js, first month is 0, not 1
+				
+				body.append('<tr></tr>');
+				body.find('tr:last-child').append('<td>'+e.name+'</td>');
+				body.find('tr:last-child').append('<td>'+curr_month+ "-" + curr_day + "-" + curr_year+'</td>');
+				body.find('tr:last-child').append(
+						'<td class="text-center">' + 
+						'<a class="btn btn-primary" title="Edit" id="update" name="update" path="update" href="'+$('#contextPath').val()+'listGames/edit/'+e.id+'">'+
+						'<i class="fa fa-pencil"></i> Edit' +
+					    '</a>'+ 
+					    '<a class="btn btn-danger deleteGame" title="Delete" href="'+$('#contextPath').val()+'listGames/delete/'+e.id+'">' + 
+					    '<i class="fa fa-trash-o"></i> Delete' +
+					    '</a>'+ 
+					    '</td>');
+			});
+			body.appendTo(mainTable);
+			//append main table
+			$("#gameList").show();
+		},
+		error : function(request, status, error) {
+			alert(request.responseText);
+			console.log(status, error);
+		}
+	});
+
 });
