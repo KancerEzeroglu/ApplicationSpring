@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/bootstrap/bootstrap.min.css"/>" />
 
-<script src="<c:url value="/static/ js/demo-rtl.js"/>"></script>
+<script src="<c:url value="/static/js/demo-rtl.js"/>"></script>
  
  
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/libs/font-awesome.css"/>" />

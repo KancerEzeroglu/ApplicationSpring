@@ -14,6 +14,8 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
 	</definition>
 
+	<definition name="membershipLayout" template="/WEB-INF/tiles/membershipLayout.jsp" />
+	
 	<definition name="welcome" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/welcome.jsp" />
 	</definition>
@@ -31,5 +33,11 @@
 	</definition>
 	<definition name="editGame" extends="baseLayout">
 		<put-attribute name="body" value="/WEB-INF/views/editGame.jsp" />
+	</definition>
+	<definition name="login" extends="membershipLayout">
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+	</definition>
+	<definition name="logout" extends="membershipLayout">
+		<put-attribute name="body" value="/WEB-INF/views/logout.jsp" />
 	</definition>
 </tiles-definitions>

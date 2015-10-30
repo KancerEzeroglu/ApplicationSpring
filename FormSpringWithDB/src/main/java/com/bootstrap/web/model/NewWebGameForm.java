@@ -48,20 +48,20 @@ public class NewWebGameForm {
 		this.test = test;
 	}
 
-	@NotEmpty(message = "{NotEmpty.newWebGame.name}")
-	@Size(min = 5, max = 20, message = "{Size.newWebGame.name}")
+	@NotEmpty(message = "Field cannot be left blank")
+	@Size(min = 5, max = 20, message = "You must enter correct name")
 	String name;
 
-	@NotEmpty
-	@URL
+	@NotEmpty(message = "Field cannot be left blank")
+	@URL(message = "You must enter correct url for your Thumbnail Image")
 	String thumIm;
 
-	@NotEmpty
-	@Min(1)
+	@NotEmpty(message = "Field cannot be left blank")
+	@Min(value= 1, message= "You must enter positive value")
 	String view;
 
-	@NotEmpty
-	@URL
+	@NotEmpty(message = "Field cannot be left blank")
+	@URL(message = "You must enter correct url for your Game ")
 	String game;
 
 	boolean test;

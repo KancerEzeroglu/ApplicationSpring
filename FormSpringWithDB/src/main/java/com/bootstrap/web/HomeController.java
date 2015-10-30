@@ -1,8 +1,17 @@
 package com.bootstrap.web;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +20,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.bootstrap.web.db.dao.CustomerDao;
 import com.bootstrap.web.db.dao.EditGameDao;
 import com.bootstrap.web.db.dao.NewWebGameDao;
 import com.bootstrap.web.db.model.NewWebGame;
@@ -33,8 +43,7 @@ import com.bootstrap.web.model.NewWebGameForm;
 @Controller
 public class HomeController {
 
-	@Autowired
-	protected CustomerDao customerDao;
+	
 	@Autowired
 	protected NewWebGameDao newWebGameDao;
 	@Autowired
@@ -77,8 +86,9 @@ public class HomeController {
 	public ResponseEntity<ArrayList<NewWebGame>> searchGames(
 			@ModelAttribute("listGames") ListGamesForm listgames) {
 
-/*		System.out.println("ListGame game name:" + listgames.getName()
-				+ "ListGame game date: " + listgames.getDatepickerDate());
+		/*
+		 * System.out.println("ListGame game name:" + listgames.getName() +
+		 * "ListGame game date: " + listgames.getDatepickerDate());
 		 */
 		ArrayList<NewWebGame> nwg3 = (ArrayList<NewWebGame>) newWebGameDao
 				.search(listgames.getName(), listgames.getDate());
@@ -158,14 +168,16 @@ public class HomeController {
 		// end save to DB
 
 		// check data form DB
-		
-		 /* ArrayList<NewWebGame> nwg2 = (ArrayList<NewWebGame>)
-		  newWebGameDao.getAll();
-		  */
-		  // test etmek amaciyla konsola istedigimiz datayi bastirdik. DB'ye
-		 // kayit olmus mu kontrol ettik. 
-		  /*for (int i = 0; i < nwg2.size(); i++) {
-		  System.out.println(nwg2.get(i).getDate()); }
+
+		/*
+		 * ArrayList<NewWebGame> nwg2 = (ArrayList<NewWebGame>)
+		 * newWebGameDao.getAll();
+		 */
+		// test etmek amaciyla konsola istedigimiz datayi bastirdik. DB'ye
+		// kayit olmus mu kontrol ettik.
+		/*
+		 * for (int i = 0; i < nwg2.size(); i++) {
+		 * System.out.println(nwg2.get(i).getDate()); }
 		 */
 
 		return new ResponseEntity<NewWebGameForm>(webGame, HttpStatus.OK);
@@ -192,7 +204,7 @@ public class HomeController {
 			@ModelAttribute("game") EditGameForm updateWebGame,
 			@PathVariable int gameId_up) {
 
-		//DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		// DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		Date date = new Date();
 
 		NewWebGame nwg_up = editGameDao.getByKey(gameId_up);
@@ -216,4 +228,95 @@ public class HomeController {
 		return "listGames";
 	}
 
+	@RequestMapping(value = "/download/sampleCsvFile")
+	public void downloadSampleCSVFile(HttpServletResponse response)
+			throws IOException {
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition",
+				"attachment; filename=\"gamelist.csv\"");
+
+		List<NewWebGame> gamesList = (List<NewWebGame>) newWebGameDao.getAll();
+		// PrintWriter writer = response.getWriter();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+		ArrayList<String> rows = new ArrayList<String>();
+		rows.add("Name,Created Date");
+		rows.add("\n");
+
+		HashMap gameHashName = new HashMap();
+
+		for (NewWebGame nwg : gamesList) {
+			gameHashName.put(nwg.getId(), nwg.getName());
+
+		}
+		HashMap gameHashDate = new HashMap();
+
+		for (NewWebGame nwg2 : gamesList) {
+			gameHashDate.put(nwg2.getId(), nwg2.getDate());
+		}
+
+		Set set = gameHashName.entrySet();
+		Set set2 = gameHashDate.entrySet();
+
+		Iterator i = set.iterator();
+		Iterator i2 = set2.iterator();
+
+		while (i.hasNext()) {
+			Map.Entry me = (Map.Entry) i.next();
+			Map.Entry me2 = (Map.Entry) i2.next();
+
+			rows.add(me.getKey().toString() + ",");
+			rows.add(me.getValue().toString() + ",");
+			rows.add(df.format(me2.getValue()));
+			rows.add("\n");
+		}
+
+		Iterator<String> iter = rows.iterator();
+		while (iter.hasNext()) {
+			String outputString = (String) iter.next();
+			response.getOutputStream().print(outputString);
+		}
+
+		response.getOutputStream().flush();
+
+		// icerisinde C1410.. yazan bir CSV dosyasi indirir.
+		// PrintWriter writer = response.getWriter();
+		// writer.println("C14107153");
+
+	}
+
+	// to download Excel
+	@RequestMapping(value = "/download/sampleExcelFile")
+	public ModelAndView downloadSampleExcelFile() {
+		List<NewWebGame> gamesListExcel = (List<NewWebGame>) newWebGameDao
+				.getAll();
+		return new ModelAndView("excelView", "gamesListExcel", gamesListExcel);
+	}
+
+	// to download PDF
+	@RequestMapping(value = "/download/samplePDFFile")
+	public ModelAndView downloadSamplePDFFile() {
+		List<NewWebGame> gamesListPDF = (List<NewWebGame>) newWebGameDao
+				.getAll();
+		return new ModelAndView("pdfView", "gamesListPDF", gamesListPDF);
+	}
+
+	// for Spring Security
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(ModelMap model) {
+		return "login";
+	}
+
+	@RequestMapping(value = "/accessdenied", method = RequestMethod.GET)
+	public String loginerror(ModelMap model) {
+		model.addAttribute("error", "true");
+		return "login";
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(ModelMap model) {
+		return "logout";
+	}
+
+	// end Spring Security
 }
