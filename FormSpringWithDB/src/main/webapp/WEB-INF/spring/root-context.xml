@@ -8,7 +8,7 @@
 
 	<!-- Component scan to find all Spring components -->
 	<context:component-scan base-package="com.bootstrap.web" />
-	<tx:annotation-driven />
+	<context:annotation-config/>
 	
 	
 	<!-- Data Source for first step -->
@@ -28,13 +28,18 @@
 		<property name="username" value="kancer" />
 		<property name="password" value="12345" />
 	</bean>
-
+		
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="demo" />
-		<!-- <property name="packagesToScan" value="net.infoowl.campaign.model.db" 
-			/> -->
 		<property name="packagesToScan">
 			<array>
 				<value>com.bootstrap.web.db.dao</value>
@@ -49,15 +54,13 @@
 			<props>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">validate</prop> <!-- create ile yeniden olusturulur -->
+				<prop key="hibernate.hbm2ddl.auto">validate</prop> <!-- create ile yeniden olusturulur. validate tam tersi. -->
 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
 				<prop key="jadira.usertype.autoRegisterUserTypes">true</prop>
 			</props>
 		</property>
 	</bean>
-	
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
-	</bean>
+
+	<!-- <tx:annotation-driven proxy-target-class="true"/> -->
 
 </beans>

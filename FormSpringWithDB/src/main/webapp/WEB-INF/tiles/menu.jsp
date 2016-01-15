@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <section id="col-left" class="col-left-nano">
 	<div id="col-left-inner" class="col-left-nano-content">
@@ -15,7 +16,7 @@
 					<ul class="submenu">
 						<li><a href="<c:url value="/listGames" />"> List Games </a></li>
 						<li><a href="<c:url value="/newPCGame" />"> New PC Game </a></li>
-						<li><a href="<c:url value="/newWebGame" />"> New Web Game </a></li>
+						<sec:authorize access="hasRole('ROLE_ADMIN')"><li><a href="<c:url value="/newWebGame" />"> New Web Game </a></li></sec:authorize>
 					</ul></li>
 				<li><a href="#" class="dropdown-toggle"> <i
 						class="fa fa-bullhorn"></i> <span>Announcements</span> <i

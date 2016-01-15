@@ -9,7 +9,8 @@
 	<!-- Component scan to find all Spring components -->
 	<context:component-scan base-package="com.bootstrap.web" />
 	<tx:annotation-driven />
-
+	
+	
 	<!-- Data Source for first step -->
 	<!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
 		<property name="driverClassName" value="org.hsqldb.jdbcDriver" /> <property 
@@ -54,7 +55,7 @@
 			</props>
 		</property>
 	</bean>
-
+	
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>

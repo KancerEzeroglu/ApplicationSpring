@@ -16,14 +16,15 @@
 						<div id="login-box-inner">
 							<form role="form" name="f"
 								action="<c:url value='j_spring_security_check'/>" method="POST">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<div class="input-group">
 									<span class="input-group-addon"> <i class="fa fa-user"></i>
-									</span> <input class="form-control" type="text" name="j_username"
+									</span> <input class="form-control" type="text" name="username"
 										placeholder="user name">
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon"> <i class="fa fa-key"></i>
-									</span> <input type="password" class="form-control" name="j_password"
+									</span> <input type="password" class="form-control" name="password"
 										placeholder="password">
 								</div>
 								<div class="row">

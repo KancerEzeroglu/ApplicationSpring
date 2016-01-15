@@ -2,11 +2,16 @@ package com.bootstrap.web.db.model;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,10 +32,10 @@ public class User implements Serializable
      */
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
-    @Column( name = "ID" )
-    private long id;
+    @Column( name = "USER_ID" )
+    private long userId;
 
-    @Column( name = "FIRSTNAME" )
+	@Column( name = "FIRSTNAME" )
     private String firstName;
 
     @Column( name = "LASTNAME" )
@@ -45,7 +50,10 @@ public class User implements Serializable
     @Column( name = "USERNAME" )
     private String username;
     
-    public User()
+    @OneToMany( mappedBy = "user" )
+    private List<Roles> roles;
+
+	public User()
     {
     }
 
@@ -53,15 +61,25 @@ public class User implements Serializable
                      String lastName,
                      String email,
                      String password,
-                     String username)
+                     String username,
+                     ArrayList<Roles> roles)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.username = username;
+        this.roles = roles;
     }
 
+    public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	
     public String getUsername() {
 		return username;
 	}
@@ -88,16 +106,6 @@ public class User implements Serializable
         this.firstName = firstName;
     }
 
-    public long getId()
-    {
-        return id;
-    }
-
-    public void setId( long id )
-    {
-        this.id = id;
-    }
-
     public String getLastName()
     {
         return lastName;
@@ -117,4 +125,11 @@ public class User implements Serializable
     {
         this.password = password;
     }
+    public List<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(ArrayList<Roles> roles) {
+		this.roles = roles;
+	}
 }

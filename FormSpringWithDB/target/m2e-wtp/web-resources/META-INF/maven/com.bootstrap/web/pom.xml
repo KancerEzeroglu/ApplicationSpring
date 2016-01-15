@@ -9,10 +9,10 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.6</java-version>
-		
-	    <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
-	    <org.springsecurity-version>3.0.5.RELEASE</org.springsecurity-version>
-		
+
+		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
+		<org.springsecurity-version>4.0.1.RELEASE</org.springsecurity-version>
+
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 
@@ -20,6 +20,7 @@
 		<hibernate-validator-version>5.0.3.Final</hibernate-validator-version>
 
 	</properties>
+
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -264,6 +265,7 @@
 			<version>${org.springsecurity-version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
+			
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -286,7 +288,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
