@@ -1,6 +1,6 @@
 # ApplicationSpring
 
-Spring öğrenirken yaptığım örnekleri sakladığım bir repository.
+Spring öğrenirken yaptığım örnekleri sakladığım bir depo.
 Aşağıda uygulamamın ekran görüntülerini bulabilirsiniz.
 
 
